@@ -11,7 +11,7 @@ Install the python API to refprop in your python dist-packages
 
 FOR LINUX:
 Use WINE to install refprop.exe into the C:\Program Files\REFPROP\ directory
-OR use a virtual machine with windows to install REFPROP and then make the installed files available on a linux accessible partition.
+OR use a virtual machine with windows to install REFPROP (if WINE doesn't work for you) and then make the installed files available on a linux accessible partition.
 Execute the shell script, rp2so, to compile and link the refprop shared object files. In order for rp2so to run successfully, you will need to have the following installed on Linux:
 	gfortran
 	sed

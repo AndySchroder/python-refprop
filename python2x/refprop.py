@@ -395,10 +395,15 @@ def _load():
             _rp = ctypes.cdll.LoadLibrary(u"/usr/local/lib/librefprop.so")
         except OSError:#either file is not there or file has problem
             global refpropso
-            if refpropso not in globals():
-                print u'can not find "librefprop.so" \n' + \
-                       u'please enter fullpath of "librefprop.so": '
-                refpropso = sys.stdin.readline()
+            if 'refpropso' not in globals():
+		try:
+			#look relative to this file
+			refpropso=os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir,os.pardir,'REFPROPBinaries/librefprop.so'))
+			_rp = ctypes.cdll.LoadLibrary(refpropso)
+		except:
+		        print u'can not find "librefprop.so" \n' + \
+		               u'please enter fullpath of "librefprop.so" (not just its folder path): '
+		        refpropso = raw_input()
             _rp = ctypes.cdll.LoadLibrary(unicode(refpropso))
     #confirm platform system is Windows
     elif platform.system() == u'Windows':
@@ -409,7 +414,7 @@ def _load():
             if refpropdll not in globals():
                 print u'can not find "refprop.dll" \n' + \
                        u'please enter fullpath of "refprop.dll": '
-                refpropdll = sys.stdin.readline()
+                refpropdll = raw_input()
             _rp = ctypes.windll.LoadLibrary(unicode(refpropdll))
     #raise error if not defined platform system
     else:
@@ -490,8 +495,12 @@ def setpath(path=None):
     #Linux
     if platform.system()==u'Linux':
         if path == None:
-            #use standard input else user input
-            path = u'/usr/local/lib/refprop/'
+		if 'refpropso' in globals():
+			#use the same directory as librefprop.so is located in
+			path=os.path.dirname(refpropso)+'/'
+		else:
+	            #use standard input else user input
+	            path = u'/usr/local/lib/refprop/'
         #test if path exist
         os.listdir(path)
     #windows
