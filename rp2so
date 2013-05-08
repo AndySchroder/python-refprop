@@ -116,7 +116,7 @@ rm -rf /tmp/refprop/
 #install the object file
 echo '--- Installing object file ---'
 ldconfig -n ${path%/}
-ln -s ${path}librefprop.so.9 ${path%refprop/}librefprop.so
+ln -s librefprop.so.9 ${path%refprop/}librefprop.so
 
 
 echo
